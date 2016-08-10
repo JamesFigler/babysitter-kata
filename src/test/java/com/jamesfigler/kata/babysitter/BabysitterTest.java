@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 public class BabysitterTest {
 
     private final String bedTime = "8:00 PM";
+    private final String midnight = "12:00 AM";
 
     private Babysitter underTest;
 
@@ -49,7 +50,13 @@ public class BabysitterTest {
 
     @Test
     public void shouldGetPaidSixteenDollarsPerHourAfterMidnight() throws Exception {
-        int result = underTest.calculate("12:00 AM", "1:00 AM", bedTime);
+        int result = underTest.calculate(midnight, "1:00 AM", bedTime);
         assertThat(result, is(16));
+    }
+
+    @Test
+    public void shouldGetPaidForWorkingAllHoursBeforeBedtime() throws Exception {
+        int result = underTest.calculate("5:00 PM", bedTime, bedTime);
+        assertThat(result, is(12 * 3));
     }
 }
