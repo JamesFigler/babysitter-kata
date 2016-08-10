@@ -39,13 +39,13 @@ public class Babysitter {
         if((start < bed) && (end > midnight))
             return MILLISECONDS.toHours(midnight - bed);
 
-        if((start > bed) && (end > midnight))
+        if((start >= bed) && (end > midnight))
             return MILLISECONDS.toHours(midnight - start);
 
-        if((start < bed) && (end > bed) && (end < midnight))
+        if((start < bed) && (end > bed) && (end <= midnight))
             return MILLISECONDS.toHours(end - bed);
 
-        if((start > bed) && (end < midnight))
+        if((start >= bed) && (end <= midnight))
             return MILLISECONDS.toHours(end - start);
 
         return 0;
