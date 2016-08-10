@@ -1,17 +1,21 @@
 package com.jamesfigler.kata.babysitter;
 
-import java.text.SimpleDateFormat;
-
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class Babysitter {
 
+    private TimeConverter timeConverter;
+
+    public Babysitter() {
+        timeConverter = new TimeConverter();
+    }
+
     public int calculate(String startTime, String endTime, String bedTime) throws Exception {
 
-        long start = convertTimeToMilliseconds(startTime);
-        long end = convertTimeToMilliseconds(endTime);
-        long bed = convertTimeToMilliseconds(bedTime);
-        long midnight = convertTimeToMilliseconds("12:00 AM");
+        long start = timeConverter.toMilliseconds(startTime);
+        long end = timeConverter.toMilliseconds(endTime);
+        long bed = timeConverter.toMilliseconds(bedTime);
+        long midnight = timeConverter.toMilliseconds("12:00 AM");
 
         if(bed > end) {
             return (int) (12 * MILLISECONDS.toHours(end - start));
@@ -33,17 +37,5 @@ public class Babysitter {
         totalPay += 8 * hoursAfterBedtime;
 
         return totalPay;
-    }
-
-    private long convertTimeToMilliseconds(String time) throws Exception {
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa");
-        long output = formatter.parse(time).getTime();
-
-        // advance to next day if time is AM
-        if(time.endsWith("AM")) {
-            output += 24 * 60 * 60 * 1000;
-        }
-
-        return output;
     }
 }

@@ -8,8 +8,9 @@ import static org.junit.Assert.assertThat;
 
 public class BabysitterTest {
 
+    private final String bedTime = "8:00 PM";
+
     private Babysitter underTest;
-    private String bedTime = "8:00 PM";
 
     @Before
     public void setUp() {
