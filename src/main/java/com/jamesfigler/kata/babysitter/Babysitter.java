@@ -5,6 +5,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 public class Babysitter {
 
     private TimeConverter timeConverter;
+    private int start, end, bed, midnight;
 
     public Babysitter() {
         timeConverter = new TimeConverter();
@@ -12,10 +13,10 @@ public class Babysitter {
 
     public int calculate(String startTime, String endTime, String bedTime) throws Exception {
 
-        long start = timeConverter.toMilliseconds(startTime);
-        long end = timeConverter.toMilliseconds(endTime);
-        long bed = timeConverter.toMilliseconds(bedTime);
-        long midnight = timeConverter.toMilliseconds("12:00 AM");
+        start = timeConverter.toMilliseconds(startTime);
+        end = timeConverter.toMilliseconds(endTime);
+        bed = timeConverter.toMilliseconds(bedTime);
+        midnight = timeConverter.toMilliseconds("12:00 AM");
 
         if(bed > end) {
             return (int) (12 * MILLISECONDS.toHours(end - start));
@@ -29,13 +30,22 @@ public class Babysitter {
             return (int) (16 * MILLISECONDS.toHours(end - start));
         }
 
-        long hoursBeforeBedtime = MILLISECONDS.toHours(bed - start);
-        long hoursAfterBedtime = MILLISECONDS.toHours(end - bed);
-
         int totalPay = 0;
-        totalPay += 12 * hoursBeforeBedtime;
-        totalPay += 8 * hoursAfterBedtime;
+        totalPay += 12 * hoursBeforeBedtime();
+        totalPay += 8 * hoursBeforeMidnight();
 
         return totalPay;
+    }
+
+    private long hoursBeforeBedtime() {
+        return MILLISECONDS.toHours(bed - start);
+    }
+
+    private long hoursBeforeMidnight() {
+        return MILLISECONDS.toHours(end - bed);
+    }
+
+    private long hoursAfterMidnight() {
+        throw new UnsupportedOperationException();
     }
 }
