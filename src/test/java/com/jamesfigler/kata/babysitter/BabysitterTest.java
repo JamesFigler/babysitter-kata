@@ -45,4 +45,10 @@ public class BabysitterTest {
         int result = underTest.calculate("7:00 PM", "10:00 PM", bedTime);
         assertThat(result, is(28));
     }
+
+    @Test
+    public void shouldGetPaidSixteenDollarsPerHourAfterMidnight() throws Exception {
+        int result = underTest.calculate("12:00 AM", "1:00 AM", bedTime);
+        assertThat(result, is(16));
+    }
 }
