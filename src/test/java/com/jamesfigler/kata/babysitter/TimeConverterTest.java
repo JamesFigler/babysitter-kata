@@ -16,8 +16,14 @@ public class TimeConverterTest {
     }
 
     @Test
-    public void shouldConvertFromStringToMilliseconds() {
+    public void shouldConvertFromStringToMilliseconds() throws Exception {
         int result = underTest.toMilliseconds("8:00 PM");
-        assertThat(result, is(72000000)); // 20 hours since epoch
+        assertThat(result, is(20 * 60 * 60 * 1000));
+    }
+
+    @Test
+    public void shouldConvertAnotherStringToMilliseconds() throws Exception {
+        int result = underTest.toMilliseconds("10:00 PM");
+        assertThat(result, is(22 * 60 * 60 * 1000));
     }
 }
