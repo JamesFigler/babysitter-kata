@@ -20,4 +20,11 @@ public class BabysitterTest {
         int result = underTest.calculate("5:00 PM", "7:00 PM");
         assertThat(result, is(24));
     }
+
+    @Test
+    public void shouldOnlyGetPaidForFullHoursWorked() throws Exception {
+        Babysitter underTest = new Babysitter();
+        int result = underTest.calculate("5:30 PM", "6:45 PM");
+        assertThat(result, is(12));
+    }
 }
