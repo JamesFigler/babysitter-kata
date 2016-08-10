@@ -10,6 +10,9 @@ public class Babysitter {
         TimeConverter timeConverter = new TimeConverter();
 
         start = timeConverter.toMilliseconds(startTime);
+        if(start < (17 * 60 * 60 * 1000))
+            throw new TimeNotAllowedException("Starting time cannot be earlier than 5pm");
+
         end = timeConverter.toMilliseconds(endTime);
         bed = timeConverter.toMilliseconds(bedTime);
         midnight = timeConverter.toMilliseconds("12:00 AM");

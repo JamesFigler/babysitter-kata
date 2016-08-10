@@ -2,6 +2,7 @@ package com.jamesfigler.kata.babysitter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -76,5 +77,10 @@ public class BabysitterTest {
     public void shouldGetPaidForWorkingAllHoursOfTheNight() throws Exception {
         int result = underTest.calculate("5:00 PM", "4:00 AM", bedTime);
         assertThat(result, is((12 * 3) + (8 * 4) + (16 * 4)));
+    }
+
+    @Test(expected = TimeNotAllowedException.class)
+    public void shouldNotAllowWorkingBeforeFivePM() throws Exception {
+        underTest.calculate("4:00 PM", "6:00 PM", bedTime);
     }
 }
