@@ -12,40 +12,52 @@ public class Babysitter {
     }
 
     public int calculate(String startTime, String endTime, String bedTime) throws Exception {
-
         start = timeConverter.toMilliseconds(startTime);
         end = timeConverter.toMilliseconds(endTime);
         bed = timeConverter.toMilliseconds(bedTime);
         midnight = timeConverter.toMilliseconds("12:00 AM");
 
-        if(bed > end) {
-            return (int) (12 * MILLISECONDS.toHours(end - start));
-        }
-
-        else if((start > bed) && (start < midnight)) {
-            return (int) (8 * MILLISECONDS.toHours(end - start));
-        }
-
-        else if(start >= midnight) {
-            return (int) (16 * MILLISECONDS.toHours(end - start));
-        }
-
-        int totalPay = 0;
-        totalPay += 12 * hoursBeforeBedtime();
-        totalPay += 8 * hoursBeforeMidnight();
-
-        return totalPay;
+        return (int) (
+                12 * hoursBeforeBedtime() +
+                8 * hoursBeforeMidnight() +
+                16 * hoursAfterMidnight()
+        );
     }
 
     private long hoursBeforeBedtime() {
-        return MILLISECONDS.toHours(bed - start);
+        if((end > bed) && (start < bed))
+            return MILLISECONDS.toHours(bed - start);
+
+        if(end < bed) {
+            return MILLISECONDS.toHours(end - start);
+        }
+
+        return 0;
     }
 
     private long hoursBeforeMidnight() {
-        return MILLISECONDS.toHours(end - bed);
+        if((start < bed) && (end > midnight))
+            return MILLISECONDS.toHours(midnight - bed);
+
+        if((start > bed) && (end > midnight))
+            return MILLISECONDS.toHours(midnight - start);
+
+        if((start < bed) && (end > bed) && (end < midnight))
+            return MILLISECONDS.toHours(end - bed);
+
+        if((start > bed) && (end < midnight))
+            return MILLISECONDS.toHours(end - start);
+
+        return 0;
     }
 
     private long hoursAfterMidnight() {
-        throw new UnsupportedOperationException();
+        if(start >= midnight)
+            return MILLISECONDS.toHours(end - start);
+
+        if(start < midnight && end > midnight)
+            return MILLISECONDS.toHours(end - midnight);
+
+        return 0;
     }
 }
