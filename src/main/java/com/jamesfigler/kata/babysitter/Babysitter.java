@@ -5,10 +5,21 @@ import java.util.concurrent.TimeUnit;
 
 public class Babysitter {
 
-    public int calculate(String startTime, String endTime) throws Exception {
+    public int calculate(String startTime, String endTime, String bedTime) throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa");
-        long difference = formatter.parse(endTime).getTime() - formatter.parse(startTime).getTime();
+
+        long start = formatter.parse(startTime).getTime();
+        long end = formatter.parse(endTime).getTime();
+        long bed = formatter.parse(bedTime).getTime();
+
+        int wage = 12;
+
+        if(start > bed) {
+            wage = 8;
+        }
+
+        long difference = end - start;
         long hours = TimeUnit.MILLISECONDS.toHours(difference);
-        return (int) (hours * 12);
+        return (int) (hours * wage);
     }
 }
