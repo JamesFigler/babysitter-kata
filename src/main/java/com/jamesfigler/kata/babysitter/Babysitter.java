@@ -4,14 +4,11 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class Babysitter {
 
-    private TimeConverter timeConverter;
     private int start, end, bed, midnight;
 
-    public Babysitter() {
-        timeConverter = new TimeConverter();
-    }
-
     public int calculate(String startTime, String endTime, String bedTime) throws Exception {
+        TimeConverter timeConverter = new TimeConverter();
+
         start = timeConverter.toMilliseconds(startTime);
         end = timeConverter.toMilliseconds(endTime);
         bed = timeConverter.toMilliseconds(bedTime);
