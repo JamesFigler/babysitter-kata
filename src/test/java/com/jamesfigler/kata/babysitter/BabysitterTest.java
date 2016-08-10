@@ -39,4 +39,10 @@ public class BabysitterTest {
         int result = underTest.calculate("9:00 PM", "10:00 PM", bedTime);
         assertThat(result, is(8));
     }
+
+    @Test
+    public void shouldGetPaidDifferentWagesBeforeAndAfterBedtime() throws Exception {
+        int result = underTest.calculate("7:00 PM", "10:00 PM", bedTime);
+        assertThat(result, is(28));
+    }
 }
