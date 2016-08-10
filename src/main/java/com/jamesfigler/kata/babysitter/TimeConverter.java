@@ -9,6 +9,10 @@ public class TimeConverter {
         formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         long output = formatter.parse(time).getTime();
 
+        if(time.endsWith("AM")) {
+            output += (24 * 60 * 60 * 1000);
+        }
+
         return (int) output;
     }
 }

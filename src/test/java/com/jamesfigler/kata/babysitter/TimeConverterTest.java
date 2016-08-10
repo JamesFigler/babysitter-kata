@@ -26,4 +26,10 @@ public class TimeConverterTest {
         int result = underTest.toMilliseconds("10:00 PM");
         assertThat(result, is(22 * 60 * 60 * 1000));
     }
+
+    @Test
+    public void shouldRollIntoNextDayIfTimeIsMorning() throws Exception {
+        int result = underTest.toMilliseconds("2:00 AM");
+        assertThat(result, is((2 + 24) * 60 * 60 * 1000));
+    }
 }
