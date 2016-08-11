@@ -12,24 +12,28 @@ public class Babysitter {
         TimeConverter timeConverter = new TimeConverter();
 
         start = timeConverter.toMilliseconds(startTime);
-        if(start < startLimit)
-            throw new TimeNotAllowedException("Starting time cannot be earlier than 5:00 PM");
-
         end = timeConverter.toMilliseconds(endTime);
-        if(end > endLimit)
-            throw new TimeNotAllowedException("Ending time cannot be after 4:00 AM");
-
-        if(start > end)
-            throw new TimeNotAllowedException("Valid working hours are between 5:00 PM and 4:00 AM");
-
         bed = timeConverter.toMilliseconds(bedTime);
         midnight = timeConverter.toMilliseconds("12:00 AM");
+
+        checkAllowedTimes();
 
         return (int) (
                 12 * hoursBeforeBedtime() +
                 8 * hoursBeforeMidnight() +
                 16 * hoursAfterMidnight()
         );
+    }
+
+    private void checkAllowedTimes() throws TimeNotAllowedException {
+        if(start < startLimit)
+            throw new TimeNotAllowedException("Starting time cannot be earlier than 5:00 PM");
+
+        if(end > endLimit)
+            throw new TimeNotAllowedException("Ending time cannot be after 4:00 AM");
+
+        if(start > end)
+            throw new TimeNotAllowedException("Valid working hours are between 5:00 PM and 4:00 AM");
     }
 
     private long hoursBeforeBedtime() {
