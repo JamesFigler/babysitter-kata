@@ -5,15 +5,20 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 public class Babysitter {
 
     private int start, end, bed, midnight;
+    private final int startLimit = 17 * 60 * 60 * 1000;
+    private final int endLimit = (24 + 4) * 60 * 60 * 1000;
 
     public int calculate(String startTime, String endTime, String bedTime) throws Exception {
         TimeConverter timeConverter = new TimeConverter();
 
         start = timeConverter.toMilliseconds(startTime);
-        if(start < (17 * 60 * 60 * 1000))
-            throw new TimeNotAllowedException("Starting time cannot be earlier than 5pm");
+        if(start < startLimit)
+            throw new TimeNotAllowedException("Starting time cannot be earlier than 5:00 PM");
 
         end = timeConverter.toMilliseconds(endTime);
+        if(end > endLimit)
+            throw new TimeNotAllowedException("Ending time cannot be after 4:00 AM");
+
         bed = timeConverter.toMilliseconds(bedTime);
         midnight = timeConverter.toMilliseconds("12:00 AM");
 

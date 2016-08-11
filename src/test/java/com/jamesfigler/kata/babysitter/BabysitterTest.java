@@ -83,4 +83,9 @@ public class BabysitterTest {
     public void shouldNotAllowWorkingBeforeFivePM() throws Exception {
         underTest.calculate("4:00 PM", "6:00 PM", bedTime);
     }
+
+    @Test(expected = TimeNotAllowedException.class)
+    public void shouldNotAllowWorkingAfterFourAM() throws Exception {
+        underTest.calculate("11:00 PM", "5:00 AM", bedTime);
+    }
 }
