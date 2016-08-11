@@ -19,6 +19,9 @@ public class Babysitter {
         if(end > endLimit)
             throw new TimeNotAllowedException("Ending time cannot be after 4:00 AM");
 
+        if(start > end)
+            throw new TimeNotAllowedException("Valid working hours are between 5:00 PM and 4:00 AM");
+
         bed = timeConverter.toMilliseconds(bedTime);
         midnight = timeConverter.toMilliseconds("12:00 AM");
 
